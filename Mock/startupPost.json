@@ -1,0 +1,26 @@
+[
+  {
+    "description": "模拟get请求案例",
+    "request": {
+      "method": "GET",
+      "uri": "/getdemo"
+    },
+    "response": {
+      "text": "get请求响应"
+    }
+  },
+  {
+    "description": "模拟带参的get请求案例",
+    "request": {
+      "method": "GET",
+      "uri": "/getWithParam",
+      "queries": {
+        "name": "Jack",
+        "age": "18"
+      }
+    },
+    "response": {
+      "text": "带参的get请求响应"
+    }
+  }
+]
