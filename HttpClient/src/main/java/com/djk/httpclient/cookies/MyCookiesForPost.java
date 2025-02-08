@@ -1,24 +1,33 @@
 package com.djk.httpclient.cookies;
 
-import org.apache.http.client.HttpClient;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import javax.activation.MimeType;
+import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class MyCookiesForGet {
+public class MyCookiesForPost {
     String url;
     ResourceBundle bundle;
     BasicCookieStore cookieStore;
@@ -35,7 +44,6 @@ public class MyCookiesForGet {
         this.clientContext = new HttpClientContext();
         clientContext.setCookieStore(cookieStore);
     }
-
     /**
      * 获取cookies
      * @throws IOException
@@ -55,17 +63,28 @@ public class MyCookiesForGet {
         });
     }
 
-    // 使用cookies访问其他接口
+
     @Test(dependsOnMethods = "test1")
     public void test2() throws IOException {
+        String uri = bundle.getString("postWithParam.uri");
+        HttpPost post = new HttpPost(url + uri);
+        String name = "lucy";
+        String age = "18";
+        //设置请求头
+        post.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+        //构造请求体
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", "lucy");
+        jsonObject.put("age","18");
+        String jsonString = JSON.toJSONString(jsonObject);
+        post.setEntity(new StringEntity(jsonString, "UTF-8"));
+
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        String uri = bundle.getString("getWithCookie.uri");
-        HttpGet get = new HttpGet(url+uri);
+        CloseableHttpResponse resp = httpClient.execute(post, clientContext);
 
-        CloseableHttpResponse resp = httpClient.execute(get, clientContext);
-        //获取响应状态码
-        int statusCode = resp.getStatusLine().getStatusCode();
-        Assert.assertEquals(statusCode, 200);
-
+        System.out.println(EntityUtils.toString(resp.getEntity()));
+        //获取响应体
+        Assert.assertEquals(resp.getStatusLine().getStatusCode(), 200);
     }
+
 }

@@ -1,26 +1,29 @@
 [
   {
-    "description": "模拟get请求案例",
+    "description": "模拟post请求案例",
     "request": {
-      "method": "GET",
-      "uri": "/getdemo"
+      "method": "post",
+      "uri": "/postDemo"
     },
     "response": {
-      "text": "get请求响应"
+      "text": "post请求响应"
     }
   },
   {
-    "description": "模拟带参的get请求案例",
+    "description": "模拟带数据的post请求案例",
     "request": {
-      "method": "GET",
-      "uri": "/getWithParam",
-      "queries": {
-        "name": "Jack",
+      "method": "post",
+      "uri": "/postWithParam",
+      "forms": {
+        "name": "lucy",
         "age": "18"
       }
     },
+    "cookies": {
+      "token": "666"
+    },
     "response": {
-      "text": "带参的get请求响应"
+      "text": "带数据post请求响应"
     }
   }
 ]

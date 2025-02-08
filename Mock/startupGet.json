@@ -1,11 +1,88 @@
 [
   {
-    "description": "mock案例",
+    "description": "模拟get请求案例",
     "request": {
-      "uri": "/demo"
+      "method": "GET",
+      "uri": "/getdemo"
     },
     "response": {
-      "text": "第一个mock框架demo"
+      "text": "get请求响应"
+    }
+  },
+  {
+    "description": "模拟带参的get请求案例",
+    "request": {
+      "method": "GET",
+      "uri": "/getWithParam",
+      "queries": {
+        "name": "Jack",
+        "age": "18"
+      }
+    },
+    "response": {
+      "text": "带参的get请求响应"
+    }
+  },
+  {
+    "description": "模拟带cookie的get请求案例",
+    "request": {
+      "method": "GET",
+      "uri": "/getWithCookie",
+      "cookies": {
+        "token": "666"
+      }
+    },
+    "response": {
+      "text": "带Cookie的get请求响应"
+    }
+  },
+  {
+    "description": "模拟请求重定向",
+    "request": {
+      "method": "GET",
+      "uri": "/redirect"
+    },
+    "response": {
+      "status": 302,
+      "headers": {
+        "Location": "https://www.baidu.com"
+      },
+      "text": "重定向到百度"
+    }
+  },
+  {
+    "description": "模拟返回Cookie信息的请求",
+    "request": {
+      "method": "GET",
+      "uri": "/getCookies"
+    },
+    "response": {
+      "cookies": {
+        "login": "true",
+        "token": "666"
+      },
+      "text": "返回Cookie信息成功"
+    }
+  },
+  {
+    "description": "模拟带数据的post请求案例",
+    "request": {
+      "method": "post",
+      "uri": "/postWithParam",
+      "json": {
+        "name": "lucy",
+        "age": "18"
+      },
+      "cookies": {
+        "token": "666"
+      }
+    },
+    "response": {
+      "status": 200,
+      "json": {
+        "name": "jack",
+        "age": "20"
+      }
     }
   }
 ]
